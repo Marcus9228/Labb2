@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,9 +14,10 @@ namespace Lab2
         private string password;
         private List<Product> cart;
         private string membership;
-        string[] usernames = File.ReadAllLines("Usernames.txt");
+        string appPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        string[] usernames = File.ReadAllLines(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Usernames.txt");
 
-
+        
         public Customer(string name, string password, string membership)
         {
             this.membership = membership;
@@ -24,19 +26,20 @@ namespace Lab2
             cart = new List<Product>();
             Store.usedNames.Add(name);
 
+
             if (Array.IndexOf(usernames, this.name) == -1)
             {
                 Store.usedNames.Add(name);
 
-                using (StreamWriter sw = new StreamWriter("Usernames.txt", true))
+                using (StreamWriter sw = new StreamWriter(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Usernames.txt", true))
                 {
                     sw.WriteLine(this.name);
                 }
-                using (StreamWriter sw = new StreamWriter("Passwords.txt", true))
+                using (StreamWriter sw = new StreamWriter(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Passwords.txt", true))
                 {
                     sw.WriteLine(this.password);
                 }
-                using (StreamWriter sw = new StreamWriter("Memberships.txt", true))
+                using (StreamWriter sw = new StreamWriter(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Memberships.txt", true))
                 {
                     sw.WriteLine(this.membership);
                 }

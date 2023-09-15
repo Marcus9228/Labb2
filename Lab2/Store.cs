@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
 
+
 namespace Lab2
 {
     internal class Store
@@ -14,9 +15,9 @@ namespace Lab2
         private List<Customer> loggedInCustomer;
         public static List<string> usedNames = new List<string>();
         public static string currency = "SEK";
-        string[] usernames = File.ReadAllLines("Usernames.txt");
-        string[] passwords = File.ReadAllLines("Passwords.txt");
-        string[] memberships = File.ReadAllLines("Memberships.txt");
+        string[] usernames = File.ReadAllLines(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Usernames.txt");
+        string[] passwords = File.ReadAllLines(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Passwords.txt");
+        string[] memberships = File.ReadAllLines(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Memberships.txt");
         public Store()
         {
             SetUpProducts();
