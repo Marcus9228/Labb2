@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,15 +12,37 @@ namespace Lab2
         private string name;
         private string password;
         private List<Product> cart;
-        private string membership = "Normal";
+        private string membership;
+        string[] usernames = File.ReadAllLines("Usernames.txt");
 
-        public Customer(string name, string password)
+
+        public Customer(string name, string password, string membership)
         {
+            this.membership = membership;
             this.name = name;
             this.password = password;
             cart = new List<Product>();
             Store.usedNames.Add(name);
+
+            if (Array.IndexOf(usernames, this.name) == -1)
+            {
+                Store.usedNames.Add(name);
+
+                using (StreamWriter sw = new StreamWriter("Usernames.txt", true))
+                {
+                    sw.WriteLine(this.name);
+                }
+                using (StreamWriter sw = new StreamWriter("Passwords.txt", true))
+                {
+                    sw.WriteLine(this.password);
+                }
+                using (StreamWriter sw = new StreamWriter("Memberships.txt", true))
+                {
+                    sw.WriteLine(this.membership);
+                }
+            }
         }
+        
         public bool ConfirmLogin(string userName, string password)
         {
             if ((password == this.password) && (this.name == userName))
@@ -64,6 +87,10 @@ namespace Lab2
         public string GetName()
         {
             return this.name;
+        }
+        public string GetPassword()
+        {
+            return this.password;
         }
         public List<Product> GetCart()
         {
@@ -132,9 +159,13 @@ namespace Lab2
             }
             return apple;
         }
-        public virtual string GetMembership()
+        public string GetMembership()
         {
             return membership;
+        }
+        public virtual string Discount()
+        {
+            return "";
         }
     }
 }

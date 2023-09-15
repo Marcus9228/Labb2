@@ -11,24 +11,24 @@ namespace Lab2
         private string name;
         private string password;
         private List<Product> cart;
-        public string membership = "Silver";
+        private string membership;
 
-        public SilverCustomer(string name, string password) : base(name, password)
+        public SilverCustomer(string name, string password, string membership) : base(name, password, membership)
         {
+            this.membership = membership;
             this.name = name;
             this.password = password;
             cart = new List<Product>();
             Store.usedNames.Add(name);
         }
+        public override string Discount()
+        {
+            return "Discount: 10%";
+        }
 
         public override double PriceOfItems()
         {
-            Console.WriteLine("You are a silver member so your price is reduced by 10%");
             return Math.Round((base.PriceOfItems() * 0.9), 1);
-        }
-        public override string GetMembership()
-        {
-            return membership;
         }
     }
 }

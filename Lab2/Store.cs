@@ -12,8 +12,11 @@ namespace Lab2
         public List<Product> products;
         private List<Customer> customers;
         private List<Customer> loggedInCustomer;
-        public static List<string> usedNames = new List<string>(); // static so name gets added when initializing customers.
+        public static List<string> usedNames = new List<string>();
         public static string currency = "SEK";
+        string[] usernames = File.ReadAllLines("Usernames.txt");
+        string[] passwords = File.ReadAllLines("Passwords.txt");
+        string[] memberships = File.ReadAllLines("Memberships.txt");
         public Store()
         {
             SetUpProducts();
@@ -34,18 +37,29 @@ namespace Lab2
         {
             loggedInCustomer = new List<Customer>();
             customers = new List<Customer>();
-            Customer knatte = new("Knatte", "123");
-            Customer fnatte = new("Fnatte", "321");
-            Customer tjatte = new("Tjatte", "213");
-            GoldCustomer MrGold = new("MrGold", "123");
-            SilverCustomer MrSilver = new("MrSilver", "123");
-            BronzeCustomer MrBronze = new("MrBronze", "123");
-            customers.Add(knatte);
-            customers.Add(fnatte);
-            customers.Add(tjatte);
-            customers.Add(MrGold);
-            customers.Add(MrSilver);
-            customers.Add(MrBronze);
+            for (int i = 0; i < usernames.Length; i++)
+            {
+                if (memberships[i] == "Normal")
+                {
+                    Customer user = new Customer(usernames[i], passwords[i], memberships[i]);
+                    customers.Add(user);
+                } else if (memberships[i] == "Bronze")
+                {
+                    BronzeCustomer user = new BronzeCustomer(usernames[i], passwords[i], memberships[i]);
+                    customers.Add(user);
+                } else if (memberships[i] == "Silver")
+                {
+                    SilverCustomer user = new SilverCustomer(usernames[i], passwords[i], memberships[i]);
+                    customers.Add(user);
+                } else
+                {
+                    GoldCustomer user = new GoldCustomer(usernames[i], passwords[i], memberships[i]);
+                    customers.Add(user);
+                }
+            }
+            Customer knatte = new("Knatte", "123", "Normal");
+            Customer fnatte = new("Fnatte", "321", "Normal");
+            Customer tjatte = new("Tjatte", "213", "Normal");
         }
         public void Login()
         {
@@ -66,7 +80,6 @@ namespace Lab2
             if (loggedInCustomer.Count > 0)
             {
                 Console.Clear();
-                Console.WriteLine("You are now logged in as: " + username);
             }
             else
             {
@@ -83,8 +96,8 @@ namespace Lab2
         public void Logout()
         {
             Console.Clear();
+            loggedInCustomer[0].ClearCart();
             loggedInCustomer.Clear();
-            Console.WriteLine("You have logged out");
         }
         public void Register()
         {
@@ -99,11 +112,21 @@ namespace Lab2
                     Console.ForegroundColor = ConsoleColor.Black;
                     string password = Console.ReadLine();
                     Console.ForegroundColor = ConsoleColor.White;
-                    Customer customer = new Customer(userName, password);
-                    customers.Add(customer);
-                    Console.Clear();
-                    Console.WriteLine("Thanks for registering your account " + userName);
-                    Menu();
+                    Console.WriteLine("Enter what membership you want, Normal, Bronze, Silver or Gold");
+                    string membership = Console.ReadLine();
+                    if (membership == "Normal" || membership == "Bronze" || membership == "Silver" || membership == "Gold" )
+                    {
+                        Customer customer = new Customer(userName, password, membership);
+                        customers.Add(customer);
+                        Console.Clear();
+                        Console.WriteLine("Thanks for registering your account " + userName);
+                        Console.WriteLine("Please restart application to activate your membership discount");
+                        Console.ReadKey();
+                        Menu();
+                    } else
+                    {
+                        Console.WriteLine("Invalid membership input");
+                    }
                 } else 
                 {
                     Console.Clear();
@@ -118,50 +141,63 @@ namespace Lab2
         public void ItemMenu()
         {
             Console.Clear();
-            loggedInCustomer[0].GetCartItems();
             Console.WriteLine("User: " + loggedInCustomer[0].GetName());
+            Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
             Console.WriteLine("Currency: " + currency);
+            Console.WriteLine();
+            loggedInCustomer[0].GetCartItems();
             Console.WriteLine("Enter the items corresponding number to add the item to you shoppingcart\n");
             Console.WriteLine($"1: Sausage. {products[0].GetPrice()} {currency}");
             Console.WriteLine($"2: Red bull. {products[1].GetPrice()} {currency}");
             Console.WriteLine($"3: Apple. {products[2].GetPrice()} {currency}");
             Console.WriteLine("4: to go back to checkout menu");
-            int userInput = Convert.ToInt32(Console.ReadLine());
-            switch (userInput)
+            try
             {
-                case 1:
-                    loggedInCustomer[0].AddItem(products[0]);
-                    ItemMenu();
-                    break;
-                case 2:
-                    loggedInCustomer[0].AddItem(products[1]);
-                    ItemMenu();
-                    break;
-                case 3:
-                    loggedInCustomer[0].AddItem(products[2]);
-                    ItemMenu();
-                    break;
-                case 4:
-                    Console.Clear();
-                    ShoppingMenu();
-                    break;
-                default:
-                    ItemMenu();
-                    break;
+                int userInput = Convert.ToInt32(Console.ReadLine());
+                switch (userInput)
+                {
+                    case 1:
+                        loggedInCustomer[0].AddItem(products[0]);
+                        ItemMenu();
+                        break;
+                    case 2:
+                        loggedInCustomer[0].AddItem(products[1]);
+                        ItemMenu();
+                        break;
+                    case 3:
+                        loggedInCustomer[0].AddItem(products[2]);
+                        ItemMenu();
+                        break;
+                    case 4:
+                        Console.Clear();
+                        ShoppingMenu();
+                        break;
+                    default:
+                        ItemMenu();
+                        break;
+                }
+            } catch
+            {
+                Console.Clear();
+                ItemMenu();
             }
+            
         }
         public void CheckoutMenu()
         {
-
+            Console.WriteLine($"You went to the cashier and paid: {loggedInCustomer[0].PriceOfItems()} {currency}");
+            loggedInCustomer[0].ClearCart();
+            Console.ReadKey();
         }
         public void CartMenu()
         {
             if (loggedInCustomer[0].GetCart().Count > 0)
             {
                 Console.Clear();
-                //loggedInCustomer[0].GetCartItems();
                 Console.WriteLine($"User: {loggedInCustomer[0].GetName()}");
+                Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
                 Console.WriteLine($"Currency: {currency}");
+                Console.WriteLine();
                 Console.WriteLine($"Remove items by entering corresponding number to the item: ");
                 Console.WriteLine($"1: Remove 1 Sausage: you have {loggedInCustomer[0].GetKorv()} in cart");
                 Console.WriteLine($"2: Remove 1 Red Bull: you have {loggedInCustomer[0].GetRedbull()} in cart");
@@ -171,34 +207,42 @@ namespace Lab2
                 Console.WriteLine($"6: Clear shopping cart from all items");
                 Console.WriteLine();
                 Console.WriteLine($"Total price for all items: {loggedInCustomer[0].PriceOfItems()} {currency}");
-                int userInput = Convert.ToInt32(Console.ReadLine());
-                switch (userInput)
+                try
                 {
-                    case 1:
-                        loggedInCustomer[0].RemoveItem(products[0]);
-                        CartMenu();
-                        break;
-                    case 2:
-                        loggedInCustomer[0].RemoveItem(products[1]);
-                        CartMenu();
-                        break;
-                    case 3:
-                        loggedInCustomer[0].RemoveItem(products[2]);
-                        CartMenu();
-                        break;
-                    case 4:
-                        Console.Clear();
-                        ShoppingMenu();
-                        break;
-                    case 6:
-                        Console.Clear();
-                        loggedInCustomer[0].ClearCart();
-                        CartMenu();
-                        break;
-                    default:
-                        CartMenu();
-                        break;
+                    int userInput = Convert.ToInt32(Console.ReadLine());
+                    switch (userInput)
+                    {
+                        case 1:
+                            loggedInCustomer[0].RemoveItem(products[0]);
+                            CartMenu();
+                            break;
+                        case 2:
+                            loggedInCustomer[0].RemoveItem(products[1]);
+                            CartMenu();
+                            break;
+                        case 3:
+                            loggedInCustomer[0].RemoveItem(products[2]);
+                            CartMenu();
+                            break;
+                        case 4:
+                            Console.Clear();
+                            ShoppingMenu();
+                            break;
+                        case 6:
+                            Console.Clear();
+                            loggedInCustomer[0].ClearCart();
+                            CartMenu();
+                            break;
+                        default:
+                            CartMenu();
+                            break;
+                    }
+                } catch
+                {
+                    Console.Clear();
+                    CartMenu();
                 }
+                
             } else
             {
                 Console.Clear();
@@ -212,45 +256,52 @@ namespace Lab2
         {
             Console.Clear();
             Console.WriteLine("User: " + loggedInCustomer[0].GetName());
+            Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
             Console.WriteLine("Currency: " + currency);
-            Console.WriteLine("Welcome inside the store!");
+            Console.WriteLine();
             Console.WriteLine("1: See items");
             Console.WriteLine("2: Shopping cart");
             Console.WriteLine("3: Checkout");
             Console.WriteLine("4: Main menu");
-            int userInput = Convert.ToInt32(Console.ReadLine());
-            switch (userInput)
+            try
             {
-                case 1:
-                    Console.Clear();
-                    ItemMenu();
-                    ShoppingMenu();
-                    break;
-                case 2:
-                    Console.Clear();
-                    CartMenu();
-                    break;
-                case 3:
-                    Console.Clear();
-                    CheckoutMenu();
-                    break;
-                case 4:
-                    Console.Clear();
-                    Menu();
-                    break;
+                int userInput = Convert.ToInt32(Console.ReadLine());
+                switch (userInput)
+                {
+                    case 1:
+                        Console.Clear();
+                        ItemMenu();
+                        ShoppingMenu();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        CartMenu();
+                        break;
+                    case 3:
+                        Console.Clear();
+                        CheckoutMenu();
+                        break;
+                    case 4:
+                        Console.Clear();
+                        Menu();
+                        break;
+                }
+            } catch
+            {
+                Console.Clear();
+                ShoppingMenu();
             }
+            
         }
         public void Menu()
         {
-            try
+            if (loggedInCustomer.Count < 1)
             {
-                if (loggedInCustomer.Count < 1)
+                Console.WriteLine("1: Log in");
+                Console.WriteLine("2: Register");
+                Console.WriteLine("3: Exit the store");
+                try
                 {
-                    //Console.WriteLine("Welcome our store!! To proceed please log in!");
-                    //Console.WriteLine("No account? enter 2 to register!");
-                    Console.WriteLine("1: Log in");
-                    Console.WriteLine("2: Register");
-                    Console.WriteLine("3: Exit the store");
                     int userInput = Convert.ToInt32(Console.ReadLine());
                     switch (userInput)
                     {
@@ -265,19 +316,29 @@ namespace Lab2
                             Menu();
                             break;
                         case 3:
-                            Console.WriteLine("Thanks for using our store, Welcome back!");
+                            //Console.WriteLine("Thanks for using our store, Welcome back!");
                             break;
                     }
                 }
-                else
+                catch
                 {
-                    Console.WriteLine("User: " + loggedInCustomer[0].GetName());
-                    Console.WriteLine("Membership: " + loggedInCustomer[0].GetMembership());
-                    Console.WriteLine("Currency: " + currency);
-                    Console.WriteLine("1: Enter store");
-                    Console.WriteLine("2: Change user");
-                    Console.WriteLine("3: Change currency");
-                    Console.WriteLine("4: Back to login menu");
+                    Console.Clear();
+                    Menu();
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("User: " + loggedInCustomer[0].GetName());
+                Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
+                Console.WriteLine("Currency: " + currency);
+                Console.WriteLine();
+                Console.WriteLine("1: Enter store");
+                Console.WriteLine("2: Change user");
+                Console.WriteLine("3: Change currency");
+                Console.WriteLine("4: Logout");
+                try 
+                {
                     int userInput = Convert.ToInt32(Console.ReadLine());
                     switch (userInput)
                     {
@@ -298,22 +359,17 @@ namespace Lab2
                             break;
                         case 4:
                             Logout();
-                            Console.WriteLine("Thanks for using our store, Welcome back!");
+                            Menu();
                             break;
                     }
                 }
+                catch
+                {
+                    Console.Clear();
+                    Menu();
+                }
+                
             }
-            catch
-            {
-                Console.Clear();
-                Console.WriteLine("Invalid input, please enter the corresponding number");
-                Menu();
-            }
-
-        }
-        public void Settings()
-        {
-
         }
         public void ChangeCurrency()
         {
@@ -321,24 +377,32 @@ namespace Lab2
             Console.WriteLine("1: SEK");
             Console.WriteLine("2: EURO");
             Console.WriteLine("3: USD");
-            int userInput = Convert.ToInt32(Console.ReadLine());
-            switch(userInput)
+            try
             {
-                case 1:
-                    Console.WriteLine("All prices are now in SEK");
-                    currency = "SEK";
-                    break;
-                case 2:
-                    Console.WriteLine("All prices are now in EURO");
-                    currency = "EURO";
-                    break;
-                case 3:
-                    Console.WriteLine("All prices are now in USD");
-                    currency = "USD";
-                    break;
+                int userInput = Convert.ToInt32(Console.ReadLine());
+                switch (userInput)
+                {
+                    case 1:
+                        Console.WriteLine("All prices are now in SEK");
+                        currency = "SEK";
+                        break;
+                    case 2:
+                        Console.WriteLine("All prices are now in EURO");
+                        currency = "EURO";
+                        break;
+                    case 3:
+                        Console.WriteLine("All prices are now in USD");
+                        currency = "USD";
+                        break;
+                }
+            } catch
+            {
+                Console.Clear() ;
+                ChangeCurrency();
             }
-            Console.WriteLine("Press any key to return to store menu");
-            Console.ReadKey();
+            
+            //Console.WriteLine("Press any key to return to store menu");
+            //Console.ReadKey();
             Console.Clear();
             Menu();
 
@@ -346,13 +410,6 @@ namespace Lab2
         public List<Customer> GetCustomers()
         {
             return customers;
-        }
-        public void LoggedInCustomer()
-        {
-            foreach (Customer user in loggedInCustomer)
-            {
-                Console.WriteLine(user.GetName());
-            }
         }
     }
 }
