@@ -14,7 +14,6 @@ namespace Lab2
         private string password;
         private List<Product> cart;
         private string membership;
-        string appPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         string[] usernames = File.ReadAllLines(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Usernames.txt");
 
         
