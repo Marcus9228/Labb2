@@ -25,10 +25,5 @@ namespace Lab2
         {
             return "Discount: 5%";
         }
-
-        public override double PriceOfItems()
-        {
-            return Math.Round((base.PriceOfItems() * 0.95), 1);
-        }
     }
 }

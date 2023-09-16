@@ -26,18 +26,32 @@ namespace Lab2
         {
             this.name = newName;
         }
-        public double GetPrice()
+        public double GetPrice(String membership)
         {
-            double priceWithCurrency = price;
-            if (Store.currency == "SEK")
+            double defaultPrice = this.price;
+            if (membership == "Bronze")
             {
-                priceWithCurrency = price;
-            } else if (Store.currency == "EURO")
+                defaultPrice = (this.price * 0.95);
+            } else if (membership == "Silver")
             {
-                priceWithCurrency = (double)(price / 12);
+                defaultPrice = (this.price * 0.9);
+            } else if (membership == "Gold")
+            {
+                defaultPrice = (this.price * 0.85);
             } else
             {
-                priceWithCurrency = (double)(price / 10);
+                defaultPrice = this.price;
+            }
+            double priceWithCurrency = defaultPrice;
+            if (Store.currency == "SEK")
+            {
+                priceWithCurrency = defaultPrice;
+            } else if (Store.currency == "EURO")
+            {
+                priceWithCurrency = (double)(defaultPrice / 12);
+            } else
+            {
+                priceWithCurrency = (double)(defaultPrice / 10);
             }
             return Math.Round(priceWithCurrency, 1);
         }

@@ -77,12 +77,12 @@ namespace Lab2
         {
             cart.Clear();
         }
-        public virtual double PriceOfItems()
+        public double PriceOfItems()
         {
             double sum = 0;
             foreach (Product item in cart)
             {
-                sum += item.GetPrice();
+                sum += item.GetPrice(this.membership);
             }
             return Math.Round(sum, 1);
         }

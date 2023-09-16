@@ -148,9 +148,9 @@ namespace Lab2
             Console.WriteLine();
             loggedInCustomer[0].GetCartItems();
             Console.WriteLine("Enter the items corresponding number to add the item to you shoppingcart\n");
-            Console.WriteLine($"1: Sausage. {products[0].GetPrice()} {currency}");
-            Console.WriteLine($"2: Red bull. {products[1].GetPrice()} {currency}");
-            Console.WriteLine($"3: Apple. {products[2].GetPrice()} {currency}");
+            Console.WriteLine($"1: Sausage. {products[0].GetPrice(loggedInCustomer[0].GetMembership())} {currency}");
+            Console.WriteLine($"2: Red bull. {products[1].GetPrice(loggedInCustomer[0].GetMembership())} {currency}");
+            Console.WriteLine($"3: Apple. {products[2].GetPrice(loggedInCustomer[0].GetMembership())} {currency}");
             Console.WriteLine("4: to go back to checkout menu");
             try
             {
