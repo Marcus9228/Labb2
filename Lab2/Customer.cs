@@ -125,7 +125,7 @@ namespace Lab2
             Console.WriteLine($"Current total price: {PriceOfItems()} {Store.currency}");
             Console.WriteLine();
         }
-        public int GetKorv()
+        public int GetSausage()
         {
             int sausages = 0;
             foreach (Product item in cart)
@@ -168,6 +168,11 @@ namespace Lab2
         public virtual string Discount()
         {
             return "";
+        }
+
+        public string ToString()
+        {
+            return ($"Username: {name}, Password: {password}, Membership: {membership}, {Discount()}");
         }
     }
 }

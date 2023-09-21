@@ -200,7 +200,7 @@ namespace Lab2
                 Console.WriteLine($"Currency: {currency}");
                 Console.WriteLine();
                 Console.WriteLine($"Remove items by entering corresponding number to the item: ");
-                Console.WriteLine($"1: Remove 1 Sausage: you have {loggedInCustomer[0].GetKorv()} in cart");
+                Console.WriteLine($"1: Remove 1 Sausage: you have {loggedInCustomer[0].GetSausage()} in cart");
                 Console.WriteLine($"2: Remove 1 Red Bull: you have {loggedInCustomer[0].GetRedbull()} in cart");
                 Console.WriteLine($"3: Remove 1 Apple: you have {loggedInCustomer[0].GetApple()} in cart");
                 Console.WriteLine($"4: back to Shopping menu");
@@ -338,6 +338,7 @@ namespace Lab2
                 Console.WriteLine("2: Change user");
                 Console.WriteLine("3: Change currency");
                 Console.WriteLine("4: Logout");
+                Console.WriteLine("6: See all account information");
                 try 
                 {
                     int userInput = Convert.ToInt32(Console.ReadLine());
@@ -360,6 +361,14 @@ namespace Lab2
                             break;
                         case 4:
                             Logout();
+                            Menu();
+                            break;
+                        case 6:
+                            Console.Clear();
+                            Console.WriteLine(loggedInCustomer[0].ToString());
+                            Console.WriteLine("Press any key to return to the menu");
+                            Console.ReadKey();
+                            Console.Clear();
                             Menu();
                             break;
                     }
