@@ -8,17 +8,12 @@ namespace Lab2
 {
     class SilverCustomer : Customer
     {
-        private string name;
-        private string password;
-        private List<Product> cart;
-        private string membership;
-
         public SilverCustomer(string name, string password, string membership) : base(name, password, membership)
         {
-            this.membership = membership;
-            this.name = name;
-            this.password = password;
-            cart = new List<Product>();
+            this.Membership = membership;
+            this.Name = name;
+            this.Password = password;
+            this.Cart = new List<Product>();
             Store.usedNames.Add(name);
         }
         public override string Discount()

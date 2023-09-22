@@ -11,10 +11,14 @@ namespace Lab2
     internal class Customer
     {
         private string name;
+        public string Name { get { return name; } set { name = value; } }
         private string password;
-        private List<Product> cart;
+        public string Password { get { return password; } set { password = value; } }
         private string membership;
+        public string Membership { get { return membership; } set { membership = value; } }
         string[] usernames = File.ReadAllLines(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Usernames.txt");
+        private List<Product> cart;
+        public List<Product> Cart { get { return cart; } set { cart = value; } }
 
         
         public Customer(string name, string password, string membership)
