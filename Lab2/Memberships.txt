@@ -3,3 +3,4 @@ Normal
 Normal
 Gold
 Gold
+Silver

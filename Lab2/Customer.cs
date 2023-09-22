@@ -26,7 +26,11 @@ namespace Lab2
             cart = new List<Product>();
             Store.usedNames.Add(name);
 
+            SaveUser();
+        }
 
+        public void SaveUser()
+        {
             if (Array.IndexOf(usernames, this.name) == -1)
             {
                 Store.usedNames.Add(name);
@@ -150,11 +154,6 @@ namespace Lab2
             }
             return apple;
         }
-        public string GetMembership()
-        {
-            return membership;
-        }
-
         public string ToString()
         {
             return ($"Username: {name}, Password: {password}, Membership: {membership}, {Discount()}");

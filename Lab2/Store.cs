@@ -68,9 +68,7 @@ namespace Lab2
             Console.WriteLine("Login:\nEnter username:");
             string username = Console.ReadLine();
             Console.WriteLine("Enter Password");
-            Console.ForegroundColor = ConsoleColor.Black;
             string password = Console.ReadLine();
-            Console.ForegroundColor= ConsoleColor.White;
             foreach (Customer customer in customers)
             {
                 if (customer.ConfirmLogin(username, password))
@@ -110,9 +108,7 @@ namespace Lab2
                 if (userName.Length > 2)
                 {
                     Console.WriteLine("Enter password");
-                    Console.ForegroundColor = ConsoleColor.Black;
                     string password = Console.ReadLine();
-                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("Enter what membership you want, Normal, Bronze, Silver or Gold");
                     string membership = Console.ReadLine();
                     if (membership == "Normal" || membership == "Bronze" || membership == "Silver" || membership == "Gold" )
@@ -139,18 +135,22 @@ namespace Lab2
                 Console.WriteLine("Username already in use please try again.");
             }
         }
-        public void ItemMenu()
+        public void TopMenuInfo()
         {
             Console.Clear();
             Console.WriteLine("User: " + loggedInCustomer[0].Name);
-            Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
+            Console.WriteLine($"Membership: {loggedInCustomer[0].Membership}: {loggedInCustomer[0].Discount()}");
             Console.WriteLine("Currency: " + currency);
             Console.WriteLine();
+        }
+        public void ItemMenu()
+        {
+            TopMenuInfo();
             loggedInCustomer[0].GetCartItems();
             Console.WriteLine("Enter the items corresponding number to add the item to you shoppingcart\n");
-            Console.WriteLine($"1: Sausage. {products[0].GetPrice(loggedInCustomer[0].GetMembership())} {currency}");
-            Console.WriteLine($"2: Red bull. {products[1].GetPrice(loggedInCustomer[0].GetMembership())} {currency}");
-            Console.WriteLine($"3: Apple. {products[2].GetPrice(loggedInCustomer[0].GetMembership())} {currency}");
+            Console.WriteLine($"1: Sausage. {products[0].GetPrice(loggedInCustomer[0].Membership)} {currency}");
+            Console.WriteLine($"2: Red bull. {products[1].GetPrice(loggedInCustomer[0].Membership)} {currency}");
+            Console.WriteLine($"3: Apple. {products[2].GetPrice(loggedInCustomer[0].Membership)} {currency}");
             Console.WriteLine("4: to go back to checkout menu");
             try
             {
@@ -194,11 +194,7 @@ namespace Lab2
         {
             if (loggedInCustomer[0].Cart.Count > 0)
             {
-                Console.Clear();
-                Console.WriteLine($"User: {loggedInCustomer[0].Name}");
-                Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
-                Console.WriteLine($"Currency: {currency}");
-                Console.WriteLine();
+                TopMenuInfo();
                 Console.WriteLine($"Remove items by entering corresponding number to the item: ");
                 Console.WriteLine($"1: Remove 1 Sausage: you have {loggedInCustomer[0].GetSausage()} in cart");
                 Console.WriteLine($"2: Remove 1 Red Bull: you have {loggedInCustomer[0].GetRedbull()} in cart");
@@ -255,11 +251,7 @@ namespace Lab2
         }
         public void ShoppingMenu()
         {
-            Console.Clear();
-            Console.WriteLine("User: " + loggedInCustomer[0].Name);
-            Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
-            Console.WriteLine("Currency: " + currency);
-            Console.WriteLine();
+            TopMenuInfo();
             Console.WriteLine("1: See items");
             Console.WriteLine("2: Shopping cart");
             Console.WriteLine("3: Checkout");
@@ -317,7 +309,6 @@ namespace Lab2
                             Menu();
                             break;
                         case 3:
-                            //Console.WriteLine("Thanks for using our store, Welcome back!");
                             break;
                     }
                 }
@@ -330,10 +321,7 @@ namespace Lab2
             }
             else
             {
-                Console.WriteLine("User: " + loggedInCustomer[0].Name);
-                Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
-                Console.WriteLine("Currency: " + currency);
-                Console.WriteLine();
+                TopMenuInfo();
                 Console.WriteLine("1: Enter store");
                 Console.WriteLine("2: Change user");
                 Console.WriteLine("3: Change currency");
@@ -410,9 +398,6 @@ namespace Lab2
                 Console.Clear() ;
                 ChangeCurrency();
             }
-            
-            //Console.WriteLine("Press any key to return to store menu");
-            //Console.ReadKey();
             Console.Clear();
             Menu();
 
