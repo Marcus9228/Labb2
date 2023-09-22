@@ -16,6 +16,7 @@ namespace Lab2
             this.Cart = new List<Product>();
             Store.usedNames.Add(name);
         }
+
         public override string Discount()
         {
             return "Discount: 15%";

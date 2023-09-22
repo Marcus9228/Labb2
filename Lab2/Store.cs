@@ -24,6 +24,7 @@ namespace Lab2
             SetUpCustomers();
             Menu();
         }
+
         public void SetUpProducts() 
         {
             products = new List<Product>();
@@ -34,6 +35,7 @@ namespace Lab2
             products.Add(redBull);
             products.Add(apple);
         }
+
         public void SetUpCustomers()
         {
             loggedInCustomer = new List<Customer>();
@@ -62,6 +64,7 @@ namespace Lab2
             Customer fnatte = new("Fnatte", "321", "Normal");
             Customer tjatte = new("Tjatte", "213", "Normal");
         }
+
         public void Login()
         {
             Console.Clear();
@@ -92,12 +95,14 @@ namespace Lab2
                 }
             }
         }
+
         public void Logout()
         {
             Console.Clear();
             loggedInCustomer[0].ClearCart();
             loggedInCustomer.Clear();
         }
+
         public void Register()
         {
             Console.Clear();
@@ -135,6 +140,7 @@ namespace Lab2
                 Console.WriteLine("Username already in use please try again.");
             }
         }
+
         public void TopMenuInfo()
         {
             Console.Clear();
@@ -143,6 +149,7 @@ namespace Lab2
             Console.WriteLine("Currency: " + currency);
             Console.WriteLine();
         }
+
         public void ItemMenu()
         {
             TopMenuInfo();
@@ -182,14 +189,15 @@ namespace Lab2
                 Console.Clear();
                 ItemMenu();
             }
-            
         }
+
         public void CheckoutMenu()
         {
             Console.WriteLine($"You went to the cashier and paid: {loggedInCustomer[0].PriceOfItems()} {currency}");
             loggedInCustomer[0].ClearCart();
             Console.ReadKey();
         }
+
         public void CartMenu()
         {
             if (loggedInCustomer[0].Cart.Count > 0)
@@ -239,7 +247,6 @@ namespace Lab2
                     Console.Clear();
                     CartMenu();
                 }
-                
             } else
             {
                 Console.Clear();
@@ -249,6 +256,7 @@ namespace Lab2
                 ShoppingMenu();
             }
         }
+
         public void ShoppingMenu()
         {
             TopMenuInfo();
@@ -284,8 +292,8 @@ namespace Lab2
                 Console.Clear();
                 ShoppingMenu();
             }
-            
         }
+
         public void Menu()
         {
             if (loggedInCustomer.Count < 1)
@@ -317,7 +325,6 @@ namespace Lab2
                     Console.Clear();
                     Menu();
                 }
-
             }
             else
             {
@@ -366,9 +373,9 @@ namespace Lab2
                     Console.Clear();
                     Menu();
                 }
-                
             }
         }
+
         public void ChangeCurrency()
         {
             Console.WriteLine("Enter the corresponding number to the currency you wish to use!");
@@ -400,8 +407,8 @@ namespace Lab2
             }
             Console.Clear();
             Menu();
-
         }
+
         public List<Customer> GetCustomers()
         {
             return customers;

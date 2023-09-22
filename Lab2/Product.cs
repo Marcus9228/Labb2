@@ -18,14 +18,17 @@ namespace Lab2
             this.name = name;
             this.price = price;
         }
+
         public string GetName()
         {
             return name;
         }
+
         private void SetName(string newName)
         {
             this.name = newName;
         }
+
         public double GetPrice(String membership)
         {
             double defaultPrice = this.price;

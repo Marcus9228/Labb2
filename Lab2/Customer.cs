@@ -61,11 +61,13 @@ namespace Lab2
                 return false;
             }
         }
+
         public void AddItem(Product item)
         {
             cart.Add(item);
             Console.WriteLine(item.GetName() + " was added to cart");
         }
+
         public void RemoveItem(Product item)
         {
             try
@@ -78,10 +80,12 @@ namespace Lab2
                 Console.WriteLine("None of that items are in your cart");
             }
         }
+
         public void ClearCart()
         {
             cart.Clear();
         }
+
         public double PriceOfItems()
         {
             double sum = 0;
@@ -91,6 +95,7 @@ namespace Lab2
             }
             return Math.Round(sum, 1);
         }
+
         public void GetCartItems()
         {
             int sausages = 0;
@@ -118,6 +123,7 @@ namespace Lab2
             Console.WriteLine($"Current total price: {PriceOfItems()} {Store.currency}");
             Console.WriteLine();
         }
+
         public int GetSausage()
         {
             int sausages = 0;
@@ -130,6 +136,7 @@ namespace Lab2
             }
             return sausages;
         }
+
         public int GetRedbull()
         {
             int redbull = 0;
@@ -142,6 +149,7 @@ namespace Lab2
             }
             return redbull;
         }
+
         public int GetApple()
         {
             int apple = 0;
@@ -154,29 +162,35 @@ namespace Lab2
             }
             return apple;
         }
+
         public string ToString()
         {
             return ($"Username: {name}, Password: {password}, Membership: {membership}, {Discount()}");
         }
+
         public virtual string Discount()
         {
             return "";
         }
+
         public string Name 
         {
             get { return name; } 
             set { name = value; } 
         }
+
         public string Password 
         { 
             get { return password; } 
             set { password = value; } 
         }
+
         public string Membership 
         { 
             get { return membership; } 
             set { membership = value; } 
         }
+
         public List<Product> Cart 
         { 
             get { return cart; } 
