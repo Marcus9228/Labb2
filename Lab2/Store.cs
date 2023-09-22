@@ -142,7 +142,7 @@ namespace Lab2
         public void ItemMenu()
         {
             Console.Clear();
-            Console.WriteLine("User: " + loggedInCustomer[0].GetName());
+            Console.WriteLine("User: " + loggedInCustomer[0].Name);
             Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
             Console.WriteLine("Currency: " + currency);
             Console.WriteLine();
@@ -192,10 +192,10 @@ namespace Lab2
         }
         public void CartMenu()
         {
-            if (loggedInCustomer[0].GetCart().Count > 0)
+            if (loggedInCustomer[0].Cart.Count > 0)
             {
                 Console.Clear();
-                Console.WriteLine($"User: {loggedInCustomer[0].GetName()}");
+                Console.WriteLine($"User: {loggedInCustomer[0].Name}");
                 Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
                 Console.WriteLine($"Currency: {currency}");
                 Console.WriteLine();
@@ -256,7 +256,7 @@ namespace Lab2
         public void ShoppingMenu()
         {
             Console.Clear();
-            Console.WriteLine("User: " + loggedInCustomer[0].GetName());
+            Console.WriteLine("User: " + loggedInCustomer[0].Name);
             Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
             Console.WriteLine("Currency: " + currency);
             Console.WriteLine();
@@ -330,7 +330,7 @@ namespace Lab2
             }
             else
             {
-                Console.WriteLine("User: " + loggedInCustomer[0].GetName());
+                Console.WriteLine("User: " + loggedInCustomer[0].Name);
                 Console.WriteLine($"Membership: {loggedInCustomer[0].GetMembership()}: {loggedInCustomer[0].Discount()}");
                 Console.WriteLine("Currency: " + currency);
                 Console.WriteLine();

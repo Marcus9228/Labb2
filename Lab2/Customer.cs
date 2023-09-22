@@ -11,14 +11,11 @@ namespace Lab2
     internal class Customer
     {
         private string name;
-        public string Name { get { return name; } set { name = value; } }
         private string password;
-        public string Password { get { return password; } set { password = value; } }
         private string membership;
-        public string Membership { get { return membership; } set { membership = value; } }
         string[] usernames = File.ReadAllLines(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Usernames.txt");
         private List<Product> cart;
-        public List<Product> Cart { get { return cart; } set { cart = value; } }
+        
 
         
         public Customer(string name, string password, string membership)
@@ -90,18 +87,6 @@ namespace Lab2
             }
             return Math.Round(sum, 1);
         }
-        public string GetName()
-        {
-            return this.name;
-        }
-        public string GetPassword()
-        {
-            return this.password;
-        }
-        public List<Product> GetCart()
-        {
-            return cart;
-        }
         public void GetCartItems()
         {
             int sausages = 0;
@@ -169,14 +154,34 @@ namespace Lab2
         {
             return membership;
         }
-        public virtual string Discount()
-        {
-            return "";
-        }
 
         public string ToString()
         {
             return ($"Username: {name}, Password: {password}, Membership: {membership}, {Discount()}");
+        }
+        public virtual string Discount()
+        {
+            return "";
+        }
+        public string Name 
+        {
+            get { return name; } 
+            set { name = value; } 
+        }
+        public string Password 
+        { 
+            get { return password; } 
+            set { password = value; } 
+        }
+        public string Membership 
+        { 
+            get { return membership; } 
+            set { membership = value; } 
+        }
+        public List<Product> Cart 
+        { 
+            get { return cart; } 
+            set { cart = value; } 
         }
     }
 }
