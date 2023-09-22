@@ -193,9 +193,16 @@ namespace Lab2
 
         public void CheckoutMenu()
         {
-            Console.WriteLine($"You went to the cashier and paid: {loggedInCustomer[0].PriceOfItems()} {currency}");
-            loggedInCustomer[0].ClearCart();
-            Console.ReadKey();
+            if (loggedInCustomer[0].Cart.Count > 0)
+            {
+                Console.WriteLine($"You went to the cashier and paid: {loggedInCustomer[0].PriceOfItems()} {currency}");
+                loggedInCustomer[0].ClearCart();
+                Console.ReadKey();
+            } else
+            {
+                Console.WriteLine("Your cart is empty and have nothing to checkout");
+                Console.ReadKey();
+            }
         }
 
         public void CartMenu()
@@ -281,6 +288,7 @@ namespace Lab2
                     case 3:
                         Console.Clear();
                         CheckoutMenu();
+                        ShoppingMenu();
                         break;
                     case 4:
                         Console.Clear();
