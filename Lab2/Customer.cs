@@ -13,6 +13,7 @@ namespace Lab2
         private string name;
         private string password;
         private string membership;
+        // CHANGE TO YOUR OWN FILEPATH TO Usernames.txt
         string[] usernames = File.ReadAllLines(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Usernames.txt");
         private List<Product> cart;
         
@@ -35,14 +36,17 @@ namespace Lab2
             {
                 Store.usedNames.Add(name);
 
+                // CHANGE TO YOUR OWN FILEPATH TO Usernames.txt
                 using (StreamWriter sw = new StreamWriter(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Usernames.txt", true))
                 {
                     sw.WriteLine(this.name);
                 }
+                // CHANGE TO YOUR OWN FILEPATH TO Passwords.txt
                 using (StreamWriter sw = new StreamWriter(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Passwords.txt", true))
                 {
                     sw.WriteLine(this.password);
                 }
+                // CHANGE TO YOUR OWN FILEPATH TO Memberships.txt
                 using (StreamWriter sw = new StreamWriter(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Memberships.txt", true))
                 {
                     sw.WriteLine(this.membership);

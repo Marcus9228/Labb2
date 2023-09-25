@@ -15,8 +15,11 @@ namespace Lab2
         private List<Customer> loggedInCustomer;
         public static List<string> usedNames = new List<string>();
         public static string currency = "SEK";
+        // CHANGE TO YOUR OWN FILEPATH TO Usernames.txt
         string[] usernames = File.ReadAllLines(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Usernames.txt");
+        // CHANGE TO YOUR OWN FILEPATH TO Passwords.txt
         string[] passwords = File.ReadAllLines(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Passwords.txt");
+        // CHANGE TO YOUR OWN FILEPATH TO Memberships.txt
         string[] memberships = File.ReadAllLines(@"C:\Users\marcu\source\repos\Lab2-master\Lab2\Memberships.txt");
         public Store()
         {
